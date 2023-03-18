@@ -1,0 +1,25 @@
+@use "../../../styles//tokens/tokens.scss" as tokens;
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+%button {
+  border: transparent;
+  background-color: transparent;
+  scale: 0.75;
+  margin: 0;
+  padding: 0;
+  margin-left: -5px; // this is really hacky, quick fix for now
+}
+
+.buttonLiked {
+  @extend %button;
+  color: tokens.$color--red;
+}
+
+.buttonUnliked {
+  @extend %button;
+}

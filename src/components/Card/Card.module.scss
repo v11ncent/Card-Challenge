@@ -1,0 +1,14 @@
+@use "../../styles/tokens/tokens.scss" as tokens;
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  border-radius: 0.25rem;
+  max-width: 20rem;
+  border: 1px solid tokens.$color--black;
+
+  & > * {
+    padding-inline: 1rem;
+  }
+}
