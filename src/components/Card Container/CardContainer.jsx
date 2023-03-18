@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-import PropTypes from "prop-types";
+import PropTypes, { number } from "prop-types";
 import Card from "../Card/Card";
 import styled from "styled-components";
+import styles from "./CardContainer.module.scss";
 
 const StyledMain = styled.main`
   display: grid;
@@ -19,38 +20,44 @@ const StyledMain = styled.main`
 `;
 
 const CardContainer = ({
-  maxNumberOfCards = 100,
-  numberOfCardsShown,
+  cards,
+  currentNumberOfCardsShown,
   columns,
-  gap = "10px",
-  filterBySource,
-  cardsTheme = "light",
-  cardsBackgroundColor = "transparent",
+  gap = "1rem",
+  source,
+  backgroundColor = "transparent",
+  theme = "light",
 }) => {
-  const [cards, setCards] = useState(
-    // setting key to array index is volatile, but we don't have an id from the server to use as a key
-    Array.from({ length: maxNumberOfCards }, (_, index) => <Card key={index} />)
+  if (source) cards = cards.filter((card) => card.props.source === source);
+  const [shownCards, setShownCards] = useState(
+    cards.slice(0, currentNumberOfCardsShown)
   );
+
+  useEffect(() => {
+    setShownCards(cards.slice(0, currentNumberOfCardsShown));
+  }, [currentNumberOfCardsShown]);
 
   return (
     <StyledMain
       columns={columns}
       gap={gap}
-      cardsBackgroundColor={cardsBackgroundColor}
+      cardsBackgroundColor={backgroundColor}
+      className={theme === "light" ? styles.light : styles.dark}
     >
-      {cards && cards.slice(0, numberOfCardsShown)}
+      {shownCards}
     </StyledMain>
   );
 };
 
 CardContainer.propTypes = {
-  maxNumberOfCards: PropTypes.number,
-  numberOfCardsShown: PropTypes.number.isRequired,
+  cards: PropTypes.array.isRequired,
+  initialNumberOfCardsShown: PropTypes.number.isRequired,
+  currentNumberOfCardsShown: PropTypes.number.isRequired,
   columns: PropTypes.number,
   gap: PropTypes.string,
-  cardsBackgroundColor: PropTypes.string,
-  cardsTheme: PropTypes.string,
-  filterBySource: PropTypes.string,
+  source: PropTypes.string,
+  backgroundColor: PropTypes.string,
+  theme: PropTypes.oneOf(["light", "dark"]),
 };
 
 export default CardContainer;

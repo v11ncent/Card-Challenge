@@ -7,7 +7,7 @@ import styles from "./Card.module.scss";
 
 const MAX_LIKES = 1000;
 
-const Card = ({ name = "Dummy name", description = "Lorem ipsum..." }) => {
+const Card = ({ name = "Product", description = "Description", source }) => {
   const [likes, setLikes] = useState(Math.floor(Math.random() * MAX_LIKES));
 
   return (
@@ -17,6 +17,7 @@ const Card = ({ name = "Dummy name", description = "Lorem ipsum..." }) => {
         <Paragraph text={description} />
       </header>
       <LikedButton likes={likes} updateLikes={setLikes} />
+      <div>{source}</div>
     </article>
   );
 };
@@ -24,6 +25,7 @@ const Card = ({ name = "Dummy name", description = "Lorem ipsum..." }) => {
 Card.propTypes = {
   name: PropTypes.string,
   description: PropTypes.string,
+  source: PropTypes.string.isRequired,
 };
 
 export default Card;

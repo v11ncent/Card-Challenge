@@ -1,1 +1,15 @@
 @use "../../styles/tokens/tokens.scss" as tokens;
+
+.light {
+  & > article {
+    color: black;
+    background-color: transparent;
+  }
+}
+
+.dark {
+  & > article {
+    color: white;
+    background-color: black;
+  }
+}
